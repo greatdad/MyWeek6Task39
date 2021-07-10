@@ -1,9 +1,0 @@
-fun main (){
-    //function calls and parameter passed to argument by GIFT Seat 39
-    println(InLoveDetector(22,17))
-    println(InLoveDetector(3,11))
-    println(InLoveDetector(4,4))
-}
-fun InLoveDetector(firstPetals: Int, secondPetals: Int) : Boolean{
-    return  firstPetals % 2 !== secondPetals % 2;
-}
