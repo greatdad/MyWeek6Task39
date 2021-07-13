@@ -7,15 +7,18 @@ import com.example.myweek6task39.databinding.ContactItemBinding
 
 class ContactAdapter(
 
-    val contactItems: List<ContactModel>
-) : RecyclerView.Adapter<ContactAdapter.ViewHolder>(){
+    val contactItems: List<ContactModel>,
+    val clickFnx: (ContactModel) -> Unit
+    ) : RecyclerView.Adapter<ContactAdapter.ViewHolder>(){
 
-    inner class  ViewHolder(val binding: ContactItemBinding): RecyclerView.ViewHolder(binding.root){
+    inner class  ViewHolder(val binding: ContactItemBinding)
+        : RecyclerView.ViewHolder(binding.root){
 
         fun bind(contactItem : ContactModel){
             binding.contactName.text = contactItem.contactName
             binding.phoneNumber.text = contactItem.phoneNumber
             binding.root.setOnClickListener{
+            clickFnx(contactItem)
             }
 
         }
@@ -29,7 +32,7 @@ class ContactAdapter(
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int): Unit {
         holder.bind(contactItems.get(position))
     }
 
