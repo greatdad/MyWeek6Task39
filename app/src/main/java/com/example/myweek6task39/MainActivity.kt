@@ -6,9 +6,8 @@ import android.os.Bundle
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.example.myweek6task39.databinding.ActivityMainBinding
-import com.example.myweek6task39.databinding.ContactItemBinding
 
-const val CONTACT_KEY = "CONTACT_KEY"
+
 class MainActivity : AppCompatActivity() {
     private lateinit var  binding: ActivityMainBinding
     private lateinit var myContactAdapter: ContactAdapter
@@ -25,7 +24,11 @@ class MainActivity : AppCompatActivity() {
 
         myContactList = mutableListOf()
 
-        myContactAdapter = ContactAdapter(myContactList)
+        myContactAdapter = ContactAdapter(myContactList){
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("Contact", it.contactName)
+            startActivity(intent)
+        }
             binding.recyclerView.adapter = myContactAdapter
 
         binding.recyclerView.adapter = myContactAdapter
@@ -37,11 +40,10 @@ class MainActivity : AppCompatActivity() {
         ).allowMainThreadQueries().build()
 
         viewModel.getAllContactItems(db).observe(this, {
-         myContactAdapter = ContactAdapter(it)
+         myContactAdapter = ContactAdapter(it   )
          binding.recyclerView.adapter=myContactAdapter
          myContactAdapter.notifyDataSetChanged()
-        }
-        )
+        }        )
 
         binding.button.setOnClickListener {
             val contactName : String = binding.contactNameText.text.toString()
